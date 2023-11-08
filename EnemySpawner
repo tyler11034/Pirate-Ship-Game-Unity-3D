@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemySpawner : MonoBehaviour
+{
+    public GameObject enemyPrefab; // Reference to the enemy prefab.
+    public Transform spawnPoint; // Reference to the spawn point.
+
+    private bool hasSpawned = false; // Flag to track if an enemy has already been spawned.
+
+    void Start()
+    {
+        if (enemyPrefab == null)
+        {
+            Debug.LogError("Enemy prefab not assigned in the inspector.");
+            return;
+        }
+
+        // Call the SpawnEnemy function once at the start of the level.
+        SpawnEnemy();
+    }
+
+    void SpawnEnemy()
+    {
+        if (!hasSpawned)
+        {
+            // Instantiate the enemy prefab at the specified spawn point's position and rotation.
+            GameObject newEnemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+            hasSpawned = true;
+        }
+    }
+}
