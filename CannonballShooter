@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CannonballShooter : MonoBehaviour
+{
+    public GameObject cannonballPrefab; // Reference to the cannonball prefab.
+    public float cannonballSpeed = 35f;
+    public Transform cannonballSpawnPointRight; // Reference to the CannonballSpawnPointRight.
+    public Transform cannonballSpawnPointLeft;  // Reference to the CannonballSpawnPointLeft.
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ShootCannonball(cannonballSpawnPointRight, 1);  // Shoot a cannonball to the right.
+            ShootCannonball(cannonballSpawnPointLeft, -1); // Shoot a cannonball to the left.
+        }
+    }
+
+    void ShootCannonball(Transform spawnPoint, int direction)
+    {
+        // Create a new cannonball instance at the specified spawn point's position and rotation.
+        GameObject cannonball = Instantiate(cannonballPrefab, spawnPoint.position, spawnPoint.rotation);
+
+        // Get the Rigidbody of the cannonball.
+        Rigidbody cannonballRigidbody = cannonball.GetComponent<Rigidbody>();
+
+        // Calculate the shoot direction based on the given direction (1 for right, -1 for left).
+        Vector3 shootDirection = spawnPoint.right * direction;
+
+        // Shoot the cannonball in the calculated direction.
+        cannonballRigidbody.velocity = shootDirection * cannonballSpeed;
+    }
+}
