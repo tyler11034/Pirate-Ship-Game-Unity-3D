@@ -1,0 +1,30 @@
+using UnityEngine;
+
+public class EnemyMovement : MonoBehaviour
+{
+    public Transform target; // Reference to the player's transform.
+    public float movementSpeed = 5.0f; // Adjust the enemy's movement speed.
+    public float desiredDistance = 7.0f; // Adjust the desired distance from the player.
+
+    void Update()
+    {
+        if (target == null)
+            return;
+
+        Vector3 directionToPlayer = target.position - transform.position;
+        float distanceToPlayer = directionToPlayer.magnitude;
+
+        // Calculate the desired move direction.
+        Vector3 moveDirection = directionToPlayer.normalized;
+
+        // Check if the enemy is too far from the player.
+        if (distanceToPlayer > desiredDistance)
+        {
+            // Move towards the player.
+            transform.Translate(moveDirection * movementSpeed * Time.deltaTime);
+        }
+        // If the enemy is within the desired distance, it can stop moving or perform another action.
+
+
+    }
+}
