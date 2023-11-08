@@ -1,0 +1,36 @@
+using UnityEngine;
+
+public class PlayerShipController : MonoBehaviour
+{
+    public float moveSpeed = 5.0f; // Adjust this value to set the ship's speed.
+    public float turnSpeed = 60.0f; // Adjust this value to set the ship's turn speed.
+    public float minVelocityForTurn = 1.0f; // Adjust this value to set the minimum velocity required to turn.
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void Update()
+    {
+        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxis("Horizontal");
+
+        // Calculate the movement vector.
+        Vector3 movement = transform.forward * verticalInput * moveSpeed;
+
+        // Apply the movement to the Rigidbody.
+        rb.velocity = movement;
+
+        // Check if the ship has enough velocity to turn.
+        if (rb.velocity.magnitude > minVelocityForTurn)
+        {
+            // Calculate the rotation vector.
+            Vector3 rotation = transform.up * horizontalInput * turnSpeed * Time.deltaTime;
+
+            // Apply the rotation to the Rigidbody.
+            rb.angularVelocity = rotation;
+        }
+    }
+}
