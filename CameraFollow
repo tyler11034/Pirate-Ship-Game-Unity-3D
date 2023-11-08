@@ -1,0 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraFollow : MonoBehaviour
+{
+    public Transform target;  // The player's transform you want to follow.
+    public Vector3 offset;    // The offset from the target.
+    public float smoothTime = 0.3f;  // The time it takes for the camera to move to the target.
+
+    private Vector3 velocity = Vector3.zero;
+
+    void LateUpdate()
+    {
+        Vector3 targetPosition = target.position + offset;
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+    }
+}
